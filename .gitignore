@@ -35,6 +35,7 @@ reports/
 ._*
 
 #Local stuff
+.env*
 !.env.defaults
 !package.json
 !package-lock.json
