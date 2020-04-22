@@ -35,9 +35,7 @@ reports/
 ._*
 
 #Local stuff
-*.json
-.env*
-!.env.default
+!.env.defaults
 !package.json
 !package-lock.json
 !src/data/*.json
