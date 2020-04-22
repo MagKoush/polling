@@ -1,7 +1,8 @@
-import { ObjectId, Schema, model } from 'mongoose';
+import { model, Schema, Types } from 'mongoose';
 
 const PollSchema = new Schema({
-  id: ObjectId,
+  id: Types.ObjectId,
+  name: String,
   type: String,
   creator: String,
   timeLimit: Number,
