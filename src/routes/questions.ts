@@ -1,13 +1,15 @@
-import express from 'express';
-import { Question } from '../mongo';
+import express from "express";
+
+import { Question } from "../mongo";
 
 const router = express.Router();
 
-
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { body: { text, options } } = req;
-    const question = new Question({ text, options });
+    const {
+      body: { text, options },
+    } = req;
+    const question = new Question({ options, text });
 
     await question.save();
 
@@ -17,9 +19,11 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
     const question = await Question.findById(id);
 
     res.status(200).send(question);
@@ -27,6 +31,5 @@ router.get('/:id', async (req, res) => {
     res.status(400).send(error);
   }
 });
-
 
 export default router;

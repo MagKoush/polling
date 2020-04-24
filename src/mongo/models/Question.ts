@@ -1,9 +1,9 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema } from "mongoose";
 
 const QuestionSchema = new Schema({
   ID: Schema.Types.ObjectId,
+  options: [Schema.Types.Mixed],
   text: String,
-  options: [Schema.Types.Mixed]
-})
+});
 
-export default model('Question', QuestionSchema);
+export default model("Question", QuestionSchema);

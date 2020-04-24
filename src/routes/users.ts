@@ -1,29 +1,43 @@
-import express from 'express';
-import { User } from '../mongo';
+import express from "express";
+
+import { User } from "../mongo";
 
 const router = express.Router();
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-    const { body: { orgID, name, email, username, password, isAdmin, polls } } = req;
+    const {
+      body: { orgID, name, email, username, password, isAdmin, polls },
+    } = req;
 
-    const user = new User({ orgID, name, email, username, password, isAdmin, polls });
+    const user = new User({
+      email,
+      isAdmin,
+      name,
+      orgID,
+      password,
+      polls,
+      username,
+    });
+
     await user.save();
-    res.send(user);
 
-  } catch ({ errmsg }) {
-    res.status(400).send(errmsg);
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const { params: { id } } = req;
+    const {
+      params: { id },
+    } = req;
 
     const user = await User.findById(id);
-    res.send(user);
 
-  } catch ({ errmsg }) {
-    res.status(400).send(errmsg);
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });
 
