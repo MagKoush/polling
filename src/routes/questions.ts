@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 
-import { Question } from "../mongo";
+import { Question } from '../mongo';
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const {
       body: { text, options },
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const {
       params: { id },

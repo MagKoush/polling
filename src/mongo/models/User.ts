@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const UserSchema = new Schema({
   ID: Schema.Types.ObjectId,
@@ -10,10 +10,10 @@ const UserSchema = new Schema({
   },
   isAdmin: { default: false, type: Boolean },
   name: { index: { unique: true }, required: true, type: String, unique: true },
-  openPolls: [{ default: [], ref: "Poll", type: Schema.Types.ObjectId }],
-  orgID: { default: "12345", type: String },
+  openPolls: [{ default: [], ref: 'Poll', type: Schema.Types.ObjectId }],
+  orgID: { default: '12345', type: String },
   password: String,
-  submittedPolls: [{ default: [], ref: "Poll", type: Schema.Types.ObjectId }],
+  submittedPolls: [{ default: [], ref: 'Poll', type: Schema.Types.ObjectId }],
   username: {
     index: { unique: true },
     required: true,
@@ -34,4 +34,4 @@ UserSchema.methods.removePoll = function (pollID: string): void {
   }
 };
 
-export default model("User", UserSchema);
+export default model('User', UserSchema);

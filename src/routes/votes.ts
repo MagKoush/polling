@@ -1,10 +1,10 @@
-import express from "express";
+import express from 'express';
 
-import { Vote } from "../mongo";
+import { Vote } from '../mongo';
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const {
       body: { pollID, userID, questionID, result },
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/polls/:id", async (req, res) => {
+router.get('/polls/:id', async (req, res) => {
   try {
     const {
       params: { id },
@@ -33,7 +33,7 @@ router.get("/polls/:id", async (req, res) => {
   }
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get('/users/:id', async (req, res) => {
   try {
     const {
       params: { id },
@@ -47,7 +47,7 @@ router.get("/users/:id", async (req, res) => {
   }
 });
 
-router.get("/questions/:id", async (req, res) => {
+router.get('/questions/:id', async (req, res) => {
   try {
     const {
       params: { id },

@@ -1,11 +1,11 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const PollSchema = new Schema({
   ID: Schema.Types.ObjectId,
   created: Date,
   creator: String,
   ended: Date,
-  questions: [{ default: [], ref: "Question", type: Schema.Types.ObjectId }],
+  questions: [{ default: [], ref: 'Question', type: Schema.Types.ObjectId }],
   timeLimit: Number,
   title: String,
 });
@@ -22,4 +22,4 @@ PollSchema.methods.removeQuestion = function (pollID: string): void {
   }
 };
 
-export default model("Poll", PollSchema);
+export default model('Poll', PollSchema);

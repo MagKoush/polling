@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema } from 'mongoose';
 
 const QuestionSchema = new Schema({
   ID: Schema.Types.ObjectId,
@@ -6,4 +6,4 @@ const QuestionSchema = new Schema({
   text: String,
 });
 
-export default model("Question", QuestionSchema);
+export default model('Question', QuestionSchema);
