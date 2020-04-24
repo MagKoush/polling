@@ -1,0 +1,29 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "eslint-config-prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:import/typescript"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2019,
+    "sourceType": "module"
+  },
+  "globals": {
+    "process": true,
+    "console": true
+  },
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "simple-import-sort",
+    "sort-keys-fix"
+  ],
+  "rules": {
+    "prettier/prettier": "error",
+    "sort-keys-fix/sort-keys-fix": "error",
+    "simple-import-sort/sort": "error"
+  }
+}
