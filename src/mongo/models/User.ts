@@ -1,7 +1,8 @@
-import { model, Schema } from 'mongoose';
+import { Document, Model, model, Schema } from 'mongoose';
 
 const UserSchema = new Schema({
   ID: Schema.Types.ObjectId,
+  elections: [{ default: [], ref: 'Election', type: Schema.Types.ObjectId }],
   email: {
     index: { unique: true },
     required: true,
@@ -10,10 +11,8 @@ const UserSchema = new Schema({
   },
   isAdmin: { default: false, type: Boolean },
   name: { index: { unique: true }, required: true, type: String, unique: true },
-  openPolls: [{ default: [], ref: 'Poll', type: Schema.Types.ObjectId }],
   orgID: { default: '12345', type: String },
   password: String,
-  submittedPolls: [{ default: [], ref: 'Poll', type: Schema.Types.ObjectId }],
   username: {
     index: { unique: true },
     required: true,
@@ -22,16 +21,23 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.methods.addPoll = function (pollID: string): void {
-  this.polls.push(pollID);
+UserSchema.methods.addElection = function (electionID: string): void {
+  this.elections.push(electionID);
 };
 
-UserSchema.methods.removePoll = function (pollID: string): void {
-  const index = this.polls.indexOf(pollID);
+UserSchema.methods.removeElection = function (electionID: string): void {
+  const index = this.elections.indexOf(electionID);
 
   if (index > -1) {
-    this.polls.splice(index, 1);
+    this.elections.splice(index, 1);
   }
 };
 
-export default model('User', UserSchema);
+export interface User extends Document {
+  addElection(electionID: string): void;
+  removeElection(electionID: string): void;
+}
+
+export type UserModel = Model<User>;
+
+export default model<User, UserModel>('User', UserSchema);
