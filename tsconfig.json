@@ -6,13 +6,8 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
+    "strictNullChecks": false
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    ".vscode",
-    "types"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", ".vscode", "types"]
 }
