@@ -41,4 +41,36 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/emails/:email', async (req, res) => {
+  try {
+    const {
+      params: { email },
+    } = req;
+
+    const user = await User.find({ email });
+
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+router.put('/:id', async (req, res) => {
+  try {
+    const {
+      params: { id },
+      body: { electionID },
+    } = req;
+    const user = await User.findById(id);
+
+    user.addElection(electionID);
+
+    await user.save();
+
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 export default router;

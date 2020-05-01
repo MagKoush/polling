@@ -7,15 +7,15 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { title, creator, timelimit, created, ended },
+      body: { text, choices },
     } = req;
-    const poll = new Poll({ created, creator, ended, timelimit, title });
+    const options = choices.split(',');
+    const poll = new Poll({ options, text });
 
     await poll.save();
-
     res.status(200).send(poll);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send(JSON.stringify(error));
   }
 });
 
@@ -24,10 +24,9 @@ router.get('/:id', async (req, res) => {
     const {
       params: { id },
     } = req;
+    const poll = await Poll.findById(id);
 
-    const user = await Poll.findById(id);
-
-    res.status(200).send(user);
+    res.status(200).send(poll);
   } catch (error) {
     res.status(400).send(error);
   }
