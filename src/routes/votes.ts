@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { Election, Vote } from '../mongo';
+import { Vote } from '../mongo';
 
 const router = express.Router();
 
@@ -10,11 +10,7 @@ router.post('/', async (req, res) => {
       body: { electionID, userID, polls },
     } = req;
 
-    const votes = polls.map(({ ID, result }: any) => {
-      return new Vote({ electionID, pollID: ID, result: result.toLowerCase(), userID });
-    });
-    await Vote.collection.insertMany(votes);
-    res.send(votes);
+    res.send(await Vote.submitVotes(electionID, userID, polls));
   } catch (error) {
     res.status(400).send(error);
   }

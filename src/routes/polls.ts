@@ -7,10 +7,10 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { text, choices },
+      body: { text, choices, type },
     } = req;
     const options = choices.split(',');
-    const poll = new Poll({ options, text });
+    const poll = new Poll({ options, text, type });
 
     await poll.save();
     res.status(200).send(poll);

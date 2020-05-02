@@ -19,6 +19,43 @@ VoteSchema.index(
     unique: true,
   },
 );
+VoteSchema.statics.submitVotes = async function (
+  electionID: string,
+  userID: string,
+  polls: Array<any>,
+): Promise<Array<VoteModel>> {
+  const votes = [];
+
+  for (const { ID, results } of polls) {
+    // multipleSelection vote
+    if (Array.isArray(results)) {
+      for (const result of results) {
+        votes.push(
+          new this({
+            electionID,
+            pollID: ID,
+            result: result.toLowerCase(),
+            userID,
+          }),
+        );
+      }
+    } else {
+      //singleSelection vote
+      votes.push(
+        new this({
+          electionID,
+          pollID: ID,
+          result: results.toLowerCase(),
+          userID,
+        }),
+      );
+    }
+  }
+
+  await this.collection.insertMany(votes);
+
+  return votes;
+};
 
 VoteSchema.statics.queryByElection = function (electionID: string): any {
   return this.aggregate([
@@ -61,6 +98,7 @@ interface Vote extends Document {
 
 interface VoteModel extends Model<Vote> {
   queryByElection(electionID: string): Function;
+  submitVotes(electionID: string, userID: string, polls: Array<any>): Function;
 }
 
 export default model<Vote, VoteModel>('Vote', VoteSchema);

@@ -1,7 +1,7 @@
 import express from 'express';
+import { model } from 'mongoose';
 
 import { Election, Poll } from '../mongo';
-import { model } from 'mongoose';
 
 const router = express.Router();
 
