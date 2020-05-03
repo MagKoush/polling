@@ -9,23 +9,23 @@ const VoteSchema = new Schema({
 });
 
 // Enforce an uniqueness over three fields
-VoteSchema.index(
-  {
-    electionID: 1,
-    pollID: 1,
-    userID: 1,
-  },
-  {
-    unique: true,
-  },
-);
+// VoteSchema.index(
+//   {
+//     electionID: 1,
+//     pollID: 1,
+//     userID: 1,
+//   },
+//   {
+//     unique: true,
+//   },
+// );
+
 VoteSchema.statics.submitVotes = async function (
   electionID: string,
   userID: string,
   polls: Array<any>,
 ): Promise<Array<VoteModel>> {
   const votes = [];
-
   for (const { _id, results } of polls) {
     // multipleSelection vote
     if (Array.isArray(results)) {
@@ -52,7 +52,7 @@ VoteSchema.statics.submitVotes = async function (
     }
   }
 
-  await this.collection.insertMany(votes);
+  this.collection.insertMany(votes).catch((e: any) => console.log(e));
 
   return votes;
 };

@@ -15,7 +15,7 @@ import { Auth, Elections, Polls, Users, Votes } from './routes';
 const app = express();
 
 // Cors
-app.use(cors());
+app.use(cors({ credentials: true }));
 
 // BodyParser
 app.use(bodyParser.json()); // support json encoded bodies
@@ -41,12 +41,14 @@ passport.use(
 
 //Routes
 app.use('/auth', Auth);
-app.use('/elections', Elections);
-app.use('/polls', Polls);
-app.use('/votes', Votes);
-app.use('/users', Users);
+app.use('/elections', passport.authenticate('jwt', { session: false }), Elections);
+app.use('/polls', passport.authenticate('jwt', { session: false }), Polls);
+app.use('/votes', passport.authenticate('jwt', { session: false }), Votes);
+app.use('/users', passport.authenticate('jwt', { session: false }), Users);
 
-app.get('/', passport.authenticate('jwt', { session: false }), (req, res) => res.send('Hello MagKoush! 🍻🍻'));
+app.get('/', (req, res) => {
+  res.send('Hello MagKoush! 🍻🍻');
+});
 
 app.listen(PORT, async () => {
   try {

@@ -9,8 +9,7 @@ router.post('/login', async (req, res) => {
       body: { username, password },
     } = req;
     const [user] = await User.find({ username });
-
-    const { status, payload } = await user.authenticate(username, password);
+    const { status, payload } = await user.authenticate(password);
 
     res.status(status).send(payload);
   } catch (error) {

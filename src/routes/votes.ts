@@ -7,10 +7,11 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { electionID, userID, polls },
+      body: { electionID, polls },
+      user: { _id },
     } = req;
 
-    res.send(await Vote.submitVotes(electionID, userID, polls));
+    res.send(await Vote.submitVotes(electionID, _id, polls));
   } catch (error) {
     res.status(400).send(error);
   }

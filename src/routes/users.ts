@@ -32,8 +32,13 @@ router.get('/:id', async (req, res) => {
     const {
       params: { id },
     } = req;
+    let user = {};
 
-    const user = await User.findById(id);
+    if (id === 'me') {
+      user = req.user;
+    } else {
+      user = await User.findById(id);
+    }
 
     res.send(user);
   } catch (error) {

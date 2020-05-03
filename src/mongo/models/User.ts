@@ -35,6 +35,7 @@ UserSchema.methods.removeElection = function (electionID: string): void {
     this.elections.splice(index, 1);
   }
 };
+
 UserSchema.methods.authenticate = async function (password: string): Promise<any> {
   let response = {
     payload: {},
@@ -59,15 +60,17 @@ UserSchema.methods.authenticate = async function (password: string): Promise<any
   return response;
 };
 
-interface User extends Document {
+export interface User extends Document {
   _id: string;
   username: string;
   password: string;
   addElection(electionID: string): void;
   removeElection(electionID: string): void;
-  authenticate(username: string, password: string): Promise<any>;
+  authenticate(password: string): Promise<any>;
 }
 
-type UserModel = Model<User>;
+interface UserModel extends Model<User> {
+  _id: string;
+}
 
 export default model<User, UserModel>('User', UserSchema);

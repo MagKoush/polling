@@ -1,5 +1,4 @@
 import express from 'express';
-import { model } from 'mongoose';
 
 import { Election, Poll } from '../mongo';
 
