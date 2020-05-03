@@ -1,7 +1,7 @@
 import { Document, Model, model, Schema } from 'mongoose';
 
 const ElectionSchema = new Schema({
-  ID: Schema.Types.ObjectId,
+  _id: Schema.Types.ObjectId,
   created: Date,
   creator: String,
   ended: Date,
@@ -23,7 +23,7 @@ ElectionSchema.methods.removepoll = function (electionID: string): void {
 };
 
 interface Election extends Document {
-  ID: Schema.Types.ObjectId;
+  _id: Schema.Types.ObjectId;
   created: Date;
   creator: string;
   ended: Date;

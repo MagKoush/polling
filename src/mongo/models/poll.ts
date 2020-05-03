@@ -6,7 +6,7 @@ enum pollTypes {
 }
 
 const PollSchema = new Schema({
-  ID: Schema.Types.ObjectId,
+  _id: Schema.Types.ObjectId,
   options: [Schema.Types.Mixed],
   text: String,
   type: { default: pollTypes.MS, required: true, type: pollTypes },

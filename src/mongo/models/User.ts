@@ -1,7 +1,10 @@
+import jwt from 'jsonwebtoken';
 import { Document, Model, model, Schema } from 'mongoose';
 
+import { PASSPORT_SECRET } from '../../constants';
+
 const UserSchema = new Schema({
-  ID: Schema.Types.ObjectId,
+  _id: Schema.Types.ObjectId,
   elections: [{ default: [], ref: 'Election', type: Schema.Types.ObjectId }],
   email: {
     index: { unique: true },
@@ -32,12 +35,39 @@ UserSchema.methods.removeElection = function (electionID: string): void {
     this.elections.splice(index, 1);
   }
 };
+UserSchema.methods.authenticate = async function (password: string): Promise<any> {
+  let response = {
+    payload: {},
+    status: 200,
+  };
 
-export interface User extends Document {
+  if (!this) {
+    response = {
+      payload: { errMsg: 'User does not exist!' },
+      status: 404,
+    };
+  } else if (password !== this.password) {
+    response = {
+      payload: { errMsg: 'Password does not match!' },
+      status: 400,
+    };
+  } else {
+    const token = await jwt.sign({ _id: this._id }, PASSPORT_SECRET);
+    response.payload = { token };
+  }
+
+  return response;
+};
+
+interface User extends Document {
+  _id: string;
+  username: string;
+  password: string;
   addElection(electionID: string): void;
   removeElection(electionID: string): void;
+  authenticate(username: string, password: string): Promise<any>;
 }
 
-export type UserModel = Model<User>;
+type UserModel = Model<User>;
 
 export default model<User, UserModel>('User', UserSchema);
