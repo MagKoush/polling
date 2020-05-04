@@ -4,6 +4,16 @@ import { Vote } from '../mongo';
 
 const router = express.Router();
 
+/**
+ * POST method to create and store a vote
+ *
+ * @param {string}          path        - '/votes'
+ * @param {async Function}  callback    - Asynchronous callback to create and store
+ *                                      - a vote with the given parameters
+ * @param {string}          electionID  - Request body parameter
+ * @param {string}          polls       - Request body parameter
+ * @param {string}          _id         - Request user property through authentication
+ */
 router.post('/', async (req, res) => {
   try {
     const {
@@ -17,6 +27,14 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * GET method to query votes from associated with an election
+ *
+ * @param {string}          path        - '/votes/elections/:id'
+ * @param {async Function}  callback    - Asynchronous callback to create and store
+ *                                      - a vote with the given parameters
+ * @param {string}          id          - Request body parameter
+ */
 router.get('/elections/:id', async (req, res) => {
   try {
     const {

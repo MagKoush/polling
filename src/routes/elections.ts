@@ -4,6 +4,19 @@ import { Election, Poll } from '../mongo';
 
 const router = express.Router();
 
+/**
+ * POST method to create an election
+ *
+ * @param {string}          path      - '/elections'
+ * @param {async Function}  callback  - Asynchronous callback to create and store
+ *                                    - an election with the given parameters
+ * @param {string}          polls     - Request body parameter
+ * @param {string}          title     - Request body parameter
+ * @param {string}          creator   - Request body parameter
+ * @param {string}          timelimit - Request body parameter
+ * @param {string}          created   - Request body parameter
+ * @param {string}          ended     - Request body parameter
+ */
 router.post('/', async (req, res) => {
   try {
     const {
@@ -19,6 +32,14 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * GET method to retrieve an election
+ *
+ * @param {string}          path      - '/elections/:id'
+ * @param {async Function}  callback  - Asynchronous callback to retrieve an election
+ *                                    - from a given election ID
+ * @param {string}          id        - Request url parameter
+ */
 router.get('/:id', async (req, res) => {
   try {
     const {
@@ -33,6 +54,14 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * GET method to retrieve a set polls associated to an election
+ *
+ * @param {string}          path      - '/elections/:id/polls'
+ * @param {async Function}  callback  - Asynchronous callback to retrieve
+ *                                    - a set of polls from a given election ID
+ * @param {string}          id        - Request url parameter
+ */
 router.get('/:id/polls', async (req, res) => {
   try {
     const {

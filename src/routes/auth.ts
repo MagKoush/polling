@@ -1,8 +1,18 @@
 import express from 'express';
 
 import { User } from '../mongo';
+
 const router = express.Router();
 
+/**
+ * POST method to authorize
+ *
+ * @param {string}          path      - '/auth/login'
+ * @param {async Function}  callback  - Asynchronous callback to authenticate
+ *                                      the user and send the JWT to the client
+ * @param {string}          username  - request body parameter
+ * @param {string}          password  - request body parameter
+ */
 router.post('/login', async (req, res) => {
   try {
     const {

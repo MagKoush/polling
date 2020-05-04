@@ -3,6 +3,21 @@ import express from 'express';
 import { User } from '../mongo';
 
 const router = express.Router();
+
+/**
+ * POST method to create a user
+ *
+ * @param {string}          path      - '/users'
+ * @param {async Function}  callback  - Asynchronous callback to create and store
+ *                                    - a user with the given parameters
+ * @param {string}          orgID     - Request body parameter
+ * @param {string}          name      - Request body parameter
+ * @param {string}          email     - Request body parameter
+ * @param {string}          username  - Request body parameter
+ * @param {string}          password  - Request body parameter
+ * @param {string}          isAdmin   - Request body parameter
+ * @param {string}          polls     - Request body parameter
+ */
 router.post('/', async (req, res) => {
   try {
     const {
@@ -27,6 +42,15 @@ router.post('/', async (req, res) => {
   }
 });
 
+/**
+ * GET method to retrieve a user information from a given ID
+ *
+ * NOTE: `/users/me` will retrieve and send the token holder's information
+ *
+ * @param {string}          path      - '/users/:id'
+ * @param {async Function}  callback  - Asynchronous callback to retrieve a user
+ * @param {string}          id        - Request url parameter
+ */
 router.get('/:id', async (req, res) => {
   try {
     const {
@@ -34,11 +58,8 @@ router.get('/:id', async (req, res) => {
     } = req;
     let user = {};
 
-    if (id === 'me') {
-      user = req.user;
-    } else {
-      user = await User.findById(id);
-    }
+    if (id === 'me') user = req.user;
+    else user = await User.findById(id);
 
     res.send(user);
   } catch (error) {
@@ -46,6 +67,13 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+/**
+ * GET method to retrieve a user information from a given email
+ *
+ * @param {string}          path      - '/users/emails/:email'
+ * @param {async Function}  callback  - Asynchronous callback to retrieve a user
+ * @param {string}          email     - Request url parameter
+ */
 router.get('/emails/:email', async (req, res) => {
   try {
     const {
@@ -60,6 +88,13 @@ router.get('/emails/:email', async (req, res) => {
   }
 });
 
+/**
+ * PUT method to append elections to the user
+ *
+ * @param {string}          path      - '/users/:id'
+ * @param {async Function}  callback  - Asynchronous callback to append an election
+ * @param {string}          id     - Request url parameter
+ */
 router.put('/:id', async (req, res) => {
   try {
     const {
