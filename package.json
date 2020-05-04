@@ -13,8 +13,8 @@
     "type": "git",
     "url": "git+https://github.com/MagKoush/polling.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Arash Koushkebaghi <arash.koush@gmail.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/MagKoush/polling/issues"
   },
