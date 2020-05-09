@@ -118,6 +118,34 @@ VoteSchema.statics.queryByElection = function (electionID: string): Array<VoteMo
 };
 
 /**
+ * return set of users who have voted mapped to a give electionID
+ *
+ * @param  {string} electionID - Election's ID to query the votes from
+ * @returns {Array<VoteModel>} an array of votes
+ */
+VoteSchema.statics.queryUsersByElection = async function (electionID: string): Promise<string> {
+  const votes = await this.aggregate([
+    {
+      $match: {
+        electionID: new Types.ObjectId(electionID),
+      },
+    },
+    {
+      $group: {
+        _id: '$userID',
+      },
+    },
+  ]);
+
+  // Extract _id property value from an object
+  return votes.reduce((arr: Array<string>, currentValue: any) => {
+    arr.push(currentValue['_id']);
+
+    return arr;
+  }, []);
+};
+
+/**
  * @private
  *
  * @interface Vote Interface
@@ -147,6 +175,7 @@ interface Vote extends Document {
 interface VoteModel extends Model<Vote> {
   queryByElection(electionID: string): Function;
   submitVotes(electionID: string, userID: string, polls: Array<any>): Function;
+  queryUsersByElection(electionID: string): Function;
 }
 
 export default model<Vote, VoteModel>('Vote', VoteSchema);

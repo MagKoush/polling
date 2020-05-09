@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { Document, Model, model, Schema } from 'mongoose';
+import { Document, Model, model, Schema, Types } from 'mongoose';
 
 import { PASSPORT_SECRET } from '../../constants';
 
@@ -41,7 +41,7 @@ const UserSchema = new Schema({
 });
 
 /**
- * Add election ID from the poelections array.
+ * Add election ID from the elections array.
  *
  * @param {string} electionID - election to the given user's elections array
  */
@@ -63,9 +63,9 @@ UserSchema.methods.removeElection = function (electionID: string): void {
 };
 
 /**
- * Authenictate user to match if the username matches with the password.
+ * Authenticate user to match if the username matches with the password.
  *
- * @param {string} passowrd inputted passwrod to compared with the orgianl password stored
+ * @param {string} password inputted password to compared with the original password stored
  * @returns {Promise<Object>} response object to send to the client
  */
 UserSchema.methods.authenticate = async function (password: string): Promise<any> {
@@ -117,7 +117,7 @@ UserSchema.methods.authenticate = async function (password: string): Promise<any
  */
 export interface User extends Document {
   _id: string;
-  elections: Array<Schema.Types.ObjectId>;
+  elections: Array<Types.ObjectId>;
   email: string;
   isAdmin: boolean;
   name: string;
