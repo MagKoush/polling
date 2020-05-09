@@ -15,18 +15,18 @@ const router = express.Router();
  * @param {string}          email     - Request body parameter
  * @param {string}          username  - Request body parameter
  * @param {string}          password  - Request body parameter
- * @param {string}          isAdmin   - Request body parameter
+ * @param {string}          isRunner  - Request body parameter
  * @param {string}          polls     - Request body parameter
  */
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { orgID, name, email, username, password, isAdmin, polls },
+      body: { orgID, name, email, username, password, isRunner, polls },
     } = req;
 
     const user = new User({
       email,
-      isAdmin,
+      isRunner,
       name,
       orgID,
       password,

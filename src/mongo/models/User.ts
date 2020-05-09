@@ -13,7 +13,7 @@ import { PASSPORT_SECRET } from '../../constants';
  * @property {ObjectId}         _id         - Unique ObjectID
  * @property {Array<ObjectID>}  elections   - Array of elections associated to the user
  * @property {string}           email       - User's email
- * @property {boolean}          isAdmin     - Is user an admin
+ * @property {boolean}          isRunner    - Is user an election runner
  * @property {string}           name        - User's name
  * @property {string}           orgID       - User's orgID
  * @property {string}           password    - User's Password
@@ -28,7 +28,7 @@ const UserSchema = new Schema({
     type: String,
     unique: true,
   },
-  isAdmin: { default: false, type: Boolean },
+  isRunner: { default: false, type: Boolean },
   name: { index: { unique: true }, required: true, type: String, unique: true },
   orgID: { default: '12345', type: String },
   password: String,
