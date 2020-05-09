@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 });
 
 /**
- * GET method to query votes from associated with an election
+ * GET method to query votes associated with an election
  *
  * @param {string}          path        - '/votes/elections/:id'
  * @param {async Function}  callback    - Asynchronous callback to create and store
@@ -44,6 +44,26 @@ router.get('/elections/:id', async (req, res) => {
     const votes = await Vote.queryByElection(id);
 
     res.send(votes);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+/**
+ * GET method to query users associated with a given election
+ *
+ * @param {string}          path        - '/votes/elections/:id/users'
+ * @param {async Function}  callback    - Asynchronous callback to create and store
+ *                                      - a vote with the given parameters
+ * @param {string}          id          - Request body parameter
+ */
+router.get('/elections/:id/users', async (req, res) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    res.send(await Vote.queryUsersByElection(id));
   } catch (error) {
     res.status(400).send(error);
   }
