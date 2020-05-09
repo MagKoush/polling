@@ -1,4 +1,5 @@
 import express from 'express';
+import { Types, Schema } from 'mongoose';
 
 import { User } from '../mongo';
 
@@ -81,6 +82,27 @@ router.get('/emails/:email', async (req, res) => {
     } = req;
 
     const user = await User.find({ email });
+
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+/**
+ * GET method to retrieve list of users associated with an election
+ *
+ * @param {string}          path           - '/elections/:id'
+ * @param {async Function}  callback       - Asynchronous callback to retrieve a user
+ * @param {string}          electionID     - Request url parameter
+ */
+router.get('/elections/:id', async (req, res) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const user = await User.find({ elections: new Types.ObjectId(id) });
 
     res.send(user);
   } catch (error) {
