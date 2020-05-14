@@ -10,7 +10,6 @@ import { PASSPORT_SECRET } from '../../constants';
  *
  * @todo: hash password
  *
- * @property {ObjectId}         _id         - Unique ObjectID
  * @property {Array<ObjectID>}  elections   - Array of elections associated to the user
  * @property {string}           email       - User's email
  * @property {boolean}          isRunner    - Is user an election runner
@@ -20,7 +19,6 @@ import { PASSPORT_SECRET } from '../../constants';
  * @property {string}           username    - User's Username
  */
 const UserSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   elections: [{ default: [], ref: 'Election', type: Schema.Types.ObjectId }],
   email: {
     index: { unique: true },
@@ -28,10 +26,10 @@ const UserSchema = new Schema({
     type: String,
     unique: true,
   },
-  isRunner: { default: false, type: Boolean },
   name: { index: { unique: true }, required: true, type: String, unique: true },
   orgID: { default: '12345', type: String },
   password: String,
+  status: { default: 'voter', enum: ['admin', 'voter', 'runner'], type: String },
   username: {
     index: { unique: true },
     required: true,
@@ -103,10 +101,9 @@ UserSchema.methods.authenticate = async function (password: string): Promise<any
  *
  * @todo: hash password
  *
- * @property {ObjectId}         _id            - Unique ObjectID
  * @property {Array<ObjectID>}  elections      - Array of elections associated to the user
  * @property {string}           email          - User's email
- * @property {boolean}          isAdmin        - Is user an admin
+ * @property {string}           status         - User's status
  * @property {string}           name           - User's name
  * @property {string}           orgID          - User's orgID
  * @property {string}           username       - User's Username
@@ -116,10 +113,9 @@ UserSchema.methods.authenticate = async function (password: string): Promise<any
  * @property {Function}         authenticate   - authenticate the user
  */
 export interface User extends Document {
-  _id: string;
   elections: Array<Types.ObjectId>;
   email: string;
-  isAdmin: boolean;
+  status: String;
   name: string;
   orgID: string;
   username: string;

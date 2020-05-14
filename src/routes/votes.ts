@@ -1,4 +1,5 @@
 import express from 'express';
+import { Types } from 'mongoose';
 
 import { Vote } from '../mongo';
 
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
       user: { _id },
     } = req;
 
-    res.send(await Vote.submitVotes(electionID, _id, polls));
+    res.send(await Vote.submitVotes(electionID, new Types.ObjectId(_id), polls));
   } catch (error) {
     res.status(400).send(error);
   }

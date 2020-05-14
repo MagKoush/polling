@@ -1,5 +1,5 @@
 import express from 'express';
-import { Types, Schema } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
 import { User } from '../mongo';
 
@@ -22,16 +22,16 @@ const router = express.Router();
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { orgID, name, email, username, password, isRunner, polls },
+      body: { orgID, name, email, username, password, status, elections },
     } = req;
 
     const user = new User({
+      elections,
       email,
-      isRunner,
       name,
       orgID,
       password,
-      polls,
+      status,
       username,
     });
 
