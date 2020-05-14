@@ -36,14 +36,14 @@ const VoteSchema = new Schema({
 /**
  * store the votes
  *
- * @param  {string} electionID - Electoin ID associated to the vote
+ * @param  {string} electionID - Election ID associated to the vote
  * @param  {string} userID     - User ID associated to the vote
- * @param  {Array<any>} polls  - Polls associted to the vote
+ * @param  {Array<any>} polls  - Polls associated to the vote
  * @returns {Promise<Array<VoteModel>>} a promise to array of submitted votes
  */
 VoteSchema.statics.submitVotes = async function (
   electionID: string,
-  userID: string,
+  userID: Types.ObjectId,
   polls: Array<any>,
 ): Promise<Array<VoteModel>> {
   const votes = [];
@@ -174,7 +174,7 @@ interface Vote extends Document {
  */
 interface VoteModel extends Model<Vote> {
   queryByElection(electionID: string): Function;
-  submitVotes(electionID: string, userID: string, polls: Array<any>): Function;
+  submitVotes(electionID: string, userID: Types.ObjectId, polls: Array<any>): Function;
   queryUsersByElection(electionID: string): Function;
 }
 
