@@ -20,8 +20,7 @@ router.post('/', async (req, res) => {
     const {
       body: { text, options, type },
     } = req;
-    const choices = options.split(',');
-    const poll = new Poll({ options: choices, text, type });
+    const poll = new Poll({ options, text, type });
 
     await poll.save();
 

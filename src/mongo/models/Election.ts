@@ -5,20 +5,18 @@ import { Document, Model, model, Schema } from 'mongoose';
  *
  * Election Mongoose base schema to define the collection stored in MongoDb.
  *
- * @property {ObjectId}         _id       - Unique ObjectID
- * @property {Date}             created   - Creation Date
- * @property {string}           creator   - Cretor's name
- * @property {Date}             ended     - Expiration time
- * @property {Array<ObjectId>}  polls     - Array of poll's objectID associted to an election
+ * @property {Date}             start     - Start Date
+ * @property {string}           creator   - Creator's name
+ * @property {Date}             end       - End Date
+ * @property {Array<ObjectId>}  polls     - Array of poll's objectID associated to an election
  * @property {Number}           timelimit - Time limit in milliseconds
  * @property {string}           title     - Election's title
  */
 const ElectionSchema = new Schema({
-  _id: Schema.Types.ObjectId,
-  created: Date,
   creator: String,
-  ended: Date,
+  end: Date,
   polls: [{ default: [], ref: 'poll', type: Schema.Types.ObjectId }],
+  start: Date,
   timeLimit: Number,
   title: String,
 });
@@ -28,7 +26,7 @@ const ElectionSchema = new Schema({
  *
  * @param {string} pollID - append poll to the given election polls array
  */
-ElectionSchema.methods.addpoll = function (pollID: string): void {
+ElectionSchema.methods.addPoll = function (pollID: string): void {
   this.polls.push(pollID);
 };
 
@@ -37,7 +35,7 @@ ElectionSchema.methods.addpoll = function (pollID: string): void {
  *
  * @param {string} pollID - poll to the given election polls array
  */
-ElectionSchema.methods.removepoll = function (pollID: string): void {
+ElectionSchema.methods.removePoll = function (pollID: string): void {
   const index = this.polls.indexOf(pollID);
 
   if (index > -1) {
@@ -50,26 +48,24 @@ ElectionSchema.methods.removepoll = function (pollID: string): void {
  *
  * @interface Election interface.
  *
- * @property {ObjectId}         _id        - Unique ObjectID
  * @property {Date}             created    - Creation Date
- * @property {string}           creator    - Cretor's name
+ * @property {string}           creator    - Creator's name
  * @property {Date}             ended      - Expiration time
- * @property {Array<ObjectId>}  polls      - Array of poll's objectID associted to an election
+ * @property {Array<ObjectId>}  polls      - Array of poll's objectID associated to an election
  * @property {Number}           timelimit  - Time limit in milliseconds
  * @property {string}           title      - Election's title
- * @property {Function}         addpoll    - add poll ID to the polls
- * @property {Function}         removepoll - remove poll ID from the polls
+ * @property {Function}         addPoll    - add poll ID to the polls
+ * @property {Function}         removePoll - remove poll ID from the polls
  */
 interface Election extends Document {
-  _id: Schema.Types.ObjectId;
   created: Date;
   creator: string;
   ended: Date;
   polls: Array<Schema.Types.ObjectId>;
   timelimit: number;
   title: string;
-  addpoll(pollID: string): void;
-  removepoll(pollID: string): void;
+  addPoll(pollID: string): void;
+  removePoll(pollID: string): void;
 }
 
 /**
