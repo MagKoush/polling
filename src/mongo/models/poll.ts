@@ -7,13 +7,11 @@ import { Document, Model, model, Schema } from 'mongoose';
  *
  * @todo: Create an Enum for poll Type
  *
- * @property {ObjectId}         _id       - Unique ObjectID
  * @property {Array<Mixed>}     options   - Array of options
  * @property {string}           text      - Poll text
  * @property {string}           type      - Poll Type
  */
 const PollSchema = new Schema({
-  _id: Schema.Types.ObjectId,
   options: [Schema.Types.Mixed],
   text: String,
   type: { default: 'multipleSelection', required: true, type: String },
@@ -26,13 +24,11 @@ const PollSchema = new Schema({
  *
  * @todo: Create an Enum for poll Type
  *
- * @property {ObjectId}         _id       - Unique ObjectID
  * @property {Array<Mixed>}     options   - Array of options
  * @property {string}           text      - Poll text
  * @property {string}           type      - Poll Type
  */
 interface Poll extends Document {
-  _id: Schema.Types.ObjectId;
   options: Array<Schema.Types.Mixed>;
   text: string;
   type: string;

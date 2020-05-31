@@ -14,15 +14,15 @@ const router = express.Router();
  * @param {string}          title     - Request body parameter
  * @param {string}          creator   - Request body parameter
  * @param {string}          timelimit - Request body parameter
- * @param {string}          created   - Request body parameter
- * @param {string}          ended     - Request body parameter
+ * @param {string}          start     - Request body parameter
+ * @param {string}          end       - Request body parameter
  */
 router.post('/', async (req, res) => {
   try {
     const {
-      body: { polls, title, creator, timelimit, created, ended },
+      body: { polls, title, creator, timelimit, start, end },
     } = req;
-    const election = new Election({ created, creator, ended, polls, timelimit, title });
+    const election = new Election({ creator, end, polls, start, timelimit, title });
 
     await election.save();
 
